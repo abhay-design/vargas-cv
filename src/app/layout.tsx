@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable}  antialiased overflow-y-scroll body`}>
         <div className="max-w-[780px] p-4 md:p-10 mx-auto bg-background min-h-screen">
+          <Header />
           {children}
+          <Footer />
         </div>
       </body>
     </html>

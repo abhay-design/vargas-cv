@@ -1,5 +1,11 @@
-// import Image from "next/image";
+import Hero from "@/components/Hero";
+import Socialicons from "@/components/Social-icons";
 
 export default function Home() {
-  return <div>home</div>;
+  return (
+    <div>
+      <Hero />
+      <Socialicons />
+    </div>
+  );
 }
