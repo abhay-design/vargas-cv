@@ -21,7 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable}  antialiased overflow-y-scroll body`}>
+      <body
+        className={`${inter.variable}  antialiased overflow-y-scroll body`}
+        data-new-gr-c-s-check-loaded
+        data-gr-ext-installed
+      >
         <div className="max-w-[780px] p-4 md:p-10 mx-auto bg-background min-h-screen">
           <Header />
           {children}

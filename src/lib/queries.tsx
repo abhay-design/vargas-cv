@@ -1,5 +1,6 @@
 const baseUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL;
-import { category } from "./types";
+import { category, Post } from "./types";
+const revelidateTime: number = 86400;
 
 export async function getCategories(): Promise<category[]> {
   if (!baseUrl) {
@@ -9,4 +10,34 @@ export async function getCategories(): Promise<category[]> {
   const response = await fetch(`${baseUrl}/wp-json/wp/v2/categories`);
   const data = await response.json();
   return data;
+}
+
+export async function getAllposts(
+  pageNumber: number = 1,
+  perPage = 10,
+  searchTerm: string = "",
+  categories: number = 0
+): Promise<{ posts: Post[]; totalPages: number }> {
+  const params = new URLSearchParams({
+    per_page: perPage.toString(),
+    page: pageNumber.toString(),
+    search: searchTerm,
+  });
+
+  if (categories !== 0) {
+    params.set("categories", categories.toString());
+  }
+
+  console.log(`${baseUrl}/wp-json/wp/v2/posts?${params}`);
+  const response = await fetch(
+    `${baseUrl}/wp-json/wp/v2/posts?${params.toString()}`,
+    {
+      next: {
+        revalidate: revelidateTime,
+      },
+    }
+  );
+  const posts = await response.json();
+  const totalPages = parseInt(response.headers.get("X-WP-TotalPages") ?? "1");
+  return { posts, totalPages };
 }
